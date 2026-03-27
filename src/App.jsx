@@ -23,15 +23,15 @@ const PROJECTS = [
     ],
   },
   {
-    title: "Vue Dashboard CMS",
-    image: "https://res.cloudinary.com/your-cloud/image/upload/v1/portfolio/projects/project2.jpg",
-    tech: ["Vue.js", "Node.js", "MongoDB"],
-    desc: "Full-stack CMS with real-time preview, role-based access, and rich editor.",
-    tag: "Vue.js",
+    title: "QR Code Generate",
+    image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595578/Screenshot_2026-03-27_134725_wqstpp.png",
+    tech: ["Google App Script", "Google Sheet"],
+    desc: "ระบบสร้าง QR Code จาก Link และฝากไฟล์ สำหรับองค์กร",
+    tag: "GAS",
     color: "#60a5fa",
     features: [
-      { image: "", desc: "Rich text editor พร้อม real-time preview ทั้ง desktop และ mobile" },
-      { image: "", desc: "Role-based access control (RBAC) — Admin, Editor, Viewer" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595578/Screenshot_2026-03-27_134735_vfaftw.png", desc: "มีระบบฝากไฟล์แล้วทำ QR Code" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_134805_hiv37v.png", desc: "มีระบบจัดการหลังบ้านสำหรับ Admin" },
       { image: "", desc: "Media library จัดการรูปภาพและไฟล์ได้ในที่เดียว" },
     ],
   },
@@ -369,9 +369,9 @@ function ProjectModal({ project, onClose }) {
 
       {/* ── Lightbox ── */}
       {lightbox && (
-        <div onClick={() => setLightbox(null)}
+        <div onClick={e => { e.stopPropagation(); setLightbox(null); }}
           style={{ position: "fixed", inset: 0, zIndex: 2000, background: "rgba(0,0,0,0.88)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", animation: "fadeIn 0.15s ease", cursor: "zoom-out" }}>
-          <button onClick={() => setLightbox(null)}
+          <button onClick={e => { e.stopPropagation(); setLightbox(null); }}
             style={{ position: "fixed", top: 20, right: 24, background: "rgba(255,255,255,0.12)", border: "none", borderRadius: "50%", width: 40, height: 40, cursor: "pointer", fontSize: "1.1rem", color: "white", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2001, backdropFilter: "blur(4px)" }}>✕</button>
           <img src={lightbox} alt="preview"
             onClick={e => e.stopPropagation()}
