@@ -572,10 +572,11 @@ function ProjectsSection() {
           <div style={{ background: "#f8fafc", borderRadius: 20, padding: "2rem" }}>
             <h3 style={{ fontFamily: "'DM Serif Display','Noto Sans Thai',serif", fontSize: "1.35rem", color: "#0f172a", marginBottom: "1.25rem" }}>About Me</h3>
             <p style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", fontSize: "0.9rem", color: "#64748b", lineHeight: 1.8, marginBottom: "1rem" }}>
-              Backend engineer with 5+ years building scalable systems. Passionate about clean architecture, API design, and developer experience.
+              "IT Specialist | Web Developer | Tech Enthusiast"
+              ผู้หลงใหลในการเขียนโค้ดและการวางระบบ ถนัดการพัฒนา Web App และการจัดการ Server
             </p>
             <p style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", fontSize: "0.9rem", color: "#64748b", lineHeight: 1.8 }}>
-              I bridge the gap between backend robustness and frontend elegance using React and Vue.js.
+              ปัจจุบันกำลังสนุกกับการสร้างเครื่องมือช่วยเทรดและพัฒนาระบบหลังบ้านให้ทันสมัย "Code less, Automate more" คือคติในการทำงานของผม
             </p>
             <div className="stats-row" style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
               {[["5+","Years Exp."],["10+","Projects"],["-","Clients"]].map(([n, l]) => (
