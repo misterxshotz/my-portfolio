@@ -302,6 +302,7 @@ function ProjectModal({ project, onClose }) {
     <div onClick={onClose}
       style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(8,12,24,0.92)", backdropFilter: "blur(14px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", animation: "fadeIn 0.18s ease", overflowY: "auto" }}>
       <div onClick={e => e.stopPropagation()}
+        className="modal-scroll"
         style={{ width: "100%", maxWidth: 860, background: "white", borderRadius: 20, overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", animation: "zoomIn 0.22s cubic-bezier(0.16,1,0.3,1)", maxHeight: "88vh", overflowY: "auto" }}>
 
         {/* ── Header ── */}
@@ -787,6 +788,10 @@ export default function Portfolio() {
         @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
         @keyframes zoomIn    { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
         @keyframes spin      { to{transform:rotate(360deg)} }
+        .modal-scroll::-webkit-scrollbar        { width: 6px }
+        .modal-scroll::-webkit-scrollbar-track  { background: transparent }
+        .modal-scroll::-webkit-scrollbar-thumb  { background: #e2e8f0; border-radius: 100px }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8 }
         @keyframes blobMorph {
           0%,100% { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
           33%     { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
