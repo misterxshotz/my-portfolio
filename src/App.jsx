@@ -305,7 +305,7 @@ function ProjectModal({ project, onClose }) {
         style={{ width: "100%", maxWidth: 860, background: "white", borderRadius: 20, overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", animation: "zoomIn 0.22s cubic-bezier(0.16,1,0.3,1)", maxHeight: "88vh", overflowY: "auto" }}>
 
         {/* ── Header ── */}
-        <div style={{ background: project.color + "18", borderBottom: "1px solid " + project.color + "33", padding: "1.75rem 2rem" }}>
+        <div style={{ background: "white", borderBottom: "3px solid " + project.color, padding: "1.75rem 2rem", position: "sticky", top: 0, zIndex: 2 }}>
           <button onClick={onClose}
             style={{ position: "absolute", top: 16, right: 16, background: "rgba(0,0,0,0.08)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#374151" }}>✕</button>
           <span style={{ background: project.color, color: "white", fontSize: "0.65rem", fontWeight: 700, padding: "0.2rem 0.7rem", borderRadius: 100, display: "inline-block", marginBottom: "0.75rem" }}>{project.tag}</span>
