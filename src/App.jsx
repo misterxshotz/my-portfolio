@@ -5,21 +5,21 @@ const NAV_LINKS = ["Home", "Projects", "Certificates", "Contact"];
 
 const PROJECTS = [
   {
-    title: "REST API Gateway",
-    image: "https://res.cloudinary.com/your-cloud/image/upload/v1/portfolio/projects/project1.jpg",
-    tech: ["Node.js", "Express", "Redis"],
-    desc: "High-performance API gateway handling 50k+ req/s with rate limiting, caching, and JWT auth.",
-    tag: "Node.js",
+    title: "E-Budget",
+    image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595633/Screenshot_2026-03-27_141327_zau6yb.png",
+    tech: ["PHP", "MySQL", "Bootstrap"],
+    desc: "ระบบ e-budget รูปแบบใหม่ สะดวก สบาย",
+    tag: "PHP",
     color: "#4ade80",
     features: [
-      { image: "", desc: "Rate limiting ด้วย Redis — ป้องกัน abuse และรองรับ traffic สูงสุด 50k req/s" },
-      { image: "", desc: "JWT Authentication พร้อม refresh token rotation เพื่อความปลอดภัยสูงสุด" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput2" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput3" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput4" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput5" },
-      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput6" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141004_c9qyta.png", desc: "รองรับการทำงานอย่างเต็มรูปแบบ" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141014_nj2qug.png", desc: "พัฒนาระบบให้รองรับ E-Budget รูปแบบเก่า ระหว่างรอรูปแบบใหม่ เสถียร" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141037_er2ryn.png", desc: "สามารถดูสรุปรายงานภาพรวมจังหวัดได้" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141048_wpkfzj.png", desc: "รายงานแยกสถานศึกษาได้" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141101_mqdubg.png", desc: "มีระบบสืบค้น การเบิกจ่าย สามารถปรับแก้ได้ทั้งหมด *กรณ๊ Admin" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595580/Screenshot_2026-03-27_141114_ekdor6.png", desc: "เช็คประวัติการลบการเบิกจ่ายได้ทั้งหมด และง่ายต่อการจัดการ" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595579/Screenshot_2026-03-27_141130_vxxcxf.png", desc: "ระบบหลังบ้านของ Admin มีฟังค์ชั่นทที่จำเป็น" },
+      { image: "https://res.cloudinary.com/dx9rz1bwy/image/upload/v1774595580/Screenshot_2026-03-27_141137_djfkmp.png", desc: "ขึ้นปีงบประมาณใหม่ สามารถ One-Click Operate ได้ทันที" },
     ],
   },
   {
@@ -291,12 +291,19 @@ function Lightbox({ index, onClose, onGo }) {
 
 // ─── PROJECT MODAL ───────────────────────────────────────────────────────────
 function ProjectModal({ project, onClose }) {
+  const [lightbox, setLightbox] = useState(null); // src ของรูปที่ขยาย
+
   useEffect(() => {
-    const h = (e) => { if (e.key === "Escape") onClose(); };
+    const h = (e) => {
+      if (e.key === "Escape") {
+        if (lightbox) setLightbox(null);
+        else onClose();
+      }
+    };
     document.addEventListener("keydown", h);
     document.body.style.overflow = "hidden";
     return () => { document.removeEventListener("keydown", h); document.body.style.overflow = ""; };
-  }, []);
+  }, [lightbox]);
 
   return (
     <div onClick={onClose}
@@ -329,10 +336,16 @@ function ProjectModal({ project, onClose }) {
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}>
                   {feat.image ? (
-                    <div style={{ position: "relative", width: "100%", paddingBottom: "62%", background: "#f1f5f9", overflow: "hidden" }}>
+                    <div onClick={() => setLightbox(feat.image)}
+                      style={{ position: "relative", width: "100%", paddingBottom: "62%", background: "#f1f5f9", overflow: "hidden", cursor: "zoom-in" }}>
                       <img src={feat.image} alt={feat.desc}
-                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.3s" }}
+                        onMouseEnter={e => e.target.style.transform = "scale(1.04)"}
+                        onMouseLeave={e => e.target.style.transform = "scale(1)"}
                         onError={e => { e.target.style.display = "none"; }} />
+                      <div style={{ position: "absolute", bottom: 8, right: 8, background: "rgba(0,0,0,0.45)", borderRadius: 6, padding: "2px 6px", display: "flex", alignItems: "center", gap: 4 }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                      </div>
                     </div>
                   ) : (
                     <div style={{ position: "relative", width: "100%", paddingBottom: "62%", background: project.color + "15" }}>
@@ -353,6 +366,18 @@ function ProjectModal({ project, onClose }) {
           </div>
         )}
       </div>
+
+      {/* ── Lightbox ── */}
+      {lightbox && (
+        <div onClick={() => setLightbox(null)}
+          style={{ position: "fixed", inset: 0, zIndex: 2000, background: "rgba(0,0,0,0.88)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", animation: "fadeIn 0.15s ease", cursor: "zoom-out" }}>
+          <button onClick={() => setLightbox(null)}
+            style={{ position: "fixed", top: 20, right: 24, background: "rgba(255,255,255,0.12)", border: "none", borderRadius: "50%", width: 40, height: 40, cursor: "pointer", fontSize: "1.1rem", color: "white", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2001, backdropFilter: "blur(4px)" }}>✕</button>
+          <img src={lightbox} alt="preview"
+            onClick={e => e.stopPropagation()}
+            style={{ maxWidth: "92vw", maxHeight: "88vh", borderRadius: 12, boxShadow: "0 40px 120px rgba(0,0,0,0.7)", objectFit: "contain", animation: "zoomIn 0.2s cubic-bezier(0.16,1,0.3,1)", cursor: "default" }} />
+        </div>
+      )}
     </div>
   );
 }
@@ -477,7 +502,7 @@ function HeroSection() {
           }}>
             <span style={{ fontSize: "1.1rem" }}>💻</span>
             <div>
-              <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.72rem", fontWeight: 700, color: "#0f172a" }}>10+ Years</div>
+              <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.72rem", fontWeight: 700, color: "#0f172a" }}>5+ Years</div>
               <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.65rem", color: "#94a3b8" }}>Experience</div>
             </div>
           </div>
@@ -553,7 +578,7 @@ function ProjectsSection() {
               I bridge the gap between backend robustness and frontend elegance using React and Vue.js.
             </p>
             <div className="stats-row" style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
-              {[["5+","Years Exp."],["30+","Projects"],["15+","Clients"]].map(([n, l]) => (
+              {[["5+","Years Exp."],["10+","Projects"],["-","Clients"]].map(([n, l]) => (
                 <div key={l} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'DM Serif Display','Noto Sans Thai',serif", fontSize: "1.75rem", color: "#0f172a" }}>{n}</div>
                   <div style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", fontSize: "0.7rem", color: "#94a3b8" }}>{l}</div>
