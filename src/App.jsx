@@ -11,6 +11,11 @@ const PROJECTS = [
     desc: "High-performance API gateway handling 50k+ req/s with rate limiting, caching, and JWT auth.",
     tag: "Node.js",
     color: "#4ade80",
+    features: [
+      { image: "", desc: "Rate limiting ด้วย Redis — ป้องกัน abuse และรองรับ traffic สูงสุด 50k req/s" },
+      { image: "", desc: "JWT Authentication พร้อม refresh token rotation เพื่อความปลอดภัยสูงสุด" },
+      { image: "", desc: "Real-time monitoring dashboard แสดง latency, error rate และ throughput" },
+    ],
   },
   {
     title: "Vue Dashboard CMS",
@@ -19,6 +24,11 @@ const PROJECTS = [
     desc: "Full-stack CMS with real-time preview, role-based access, and rich editor.",
     tag: "Vue.js",
     color: "#60a5fa",
+    features: [
+      { image: "", desc: "Rich text editor พร้อม real-time preview ทั้ง desktop และ mobile" },
+      { image: "", desc: "Role-based access control (RBAC) — Admin, Editor, Viewer" },
+      { image: "", desc: "Media library จัดการรูปภาพและไฟล์ได้ในที่เดียว" },
+    ],
   },
   {
     title: "Microservice Orchestrator",
@@ -27,6 +37,11 @@ const PROJECTS = [
     desc: "Event-driven microservice architecture with message queuing, health monitoring, and auto-scaling.",
     tag: "Backend",
     color: "#f472b6",
+    features: [
+      { image: "", desc: "Message queue ด้วย RabbitMQ — ส่ง event ระหว่าง service แบบ async" },
+      { image: "", desc: "Health monitoring ตรวจสอบสถานะ service แบบ real-time" },
+      { image: "", desc: "Auto-scaling ปรับจำนวน container ตาม load โดยอัตโนมัติ" },
+    ],
   },
   {
     title: "React Analytics Board",
@@ -35,6 +50,11 @@ const PROJECTS = [
     desc: "Real-time analytics dashboard with WebSocket updates, D3 charts, and CSV export functionality.",
     tag: "React",
     color: "#fb923c",
+    features: [
+      { image: "", desc: "D3.js charts แสดงข้อมูล analytics แบบ interactive และ real-time" },
+      { image: "", desc: "WebSocket integration — อัปเดตข้อมูลทันทีโดยไม่ต้อง refresh" },
+      { image: "", desc: "Export รายงานเป็น CSV/PDF ได้ในคลิกเดียว" },
+    ],
   },
   {
     title: "Auth Service SSO",
@@ -43,6 +63,11 @@ const PROJECTS = [
     desc: "Single Sign-On service supporting OAuth2, SAML, and TOTP with session management.",
     tag: "Security",
     color: "#a78bfa",
+    features: [
+      { image: "", desc: "OAuth2 & SAML support — เชื่อมต่อกับ Google, GitHub, Microsoft ได้ทันที" },
+      { image: "", desc: "TOTP (Two-Factor Authentication) เพิ่มชั้นความปลอดภัยด้วย OTP" },
+      { image: "", desc: "Session management — จัดการ session หลาย device พร้อมกัน" },
+    ],
   },
   {
     title: "File Storage Engine",
@@ -51,6 +76,11 @@ const PROJECTS = [
     desc: "Scalable file storage with chunked upload, CDN integration, and virus scanning pipeline.",
     tag: "Cloud",
     color: "#34d399",
+    features: [
+      { image: "", desc: "Chunked upload — อัปโหลดไฟล์ขนาดใหญ่ได้โดยไม่ timeout" },
+      { image: "", desc: "CDN integration ผ่าน AWS CloudFront — โหลดไฟล์เร็วทุกภูมิภาค" },
+      { image: "", desc: "Virus scanning pipeline ตรวจสอบไฟล์ทุกชิ้นก่อนบันทึก" },
+    ],
   },
 ];
 
@@ -254,6 +284,73 @@ function Lightbox({ index, onClose, onGo }) {
   );
 }
 
+// ─── PROJECT MODAL ───────────────────────────────────────────────────────────
+function ProjectModal({ project, onClose }) {
+  useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", h); document.body.style.overflow = ""; };
+  }, []);
+
+  return (
+    <div onClick={onClose}
+      style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(8,12,24,0.92)", backdropFilter: "blur(14px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", animation: "fadeIn 0.18s ease", overflowY: "auto" }}>
+      <div onClick={e => e.stopPropagation()}
+        style={{ width: "100%", maxWidth: 860, background: "white", borderRadius: 20, overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", animation: "zoomIn 0.22s cubic-bezier(0.16,1,0.3,1)", maxHeight: "88vh", overflowY: "auto" }}>
+
+        {/* ── Header ── */}
+        <div style={{ background: project.color + "18", borderBottom: "1px solid " + project.color + "33", padding: "1.75rem 2rem", position: "sticky", top: 0, zIndex: 2 }}>
+          <button onClick={onClose}
+            style={{ position: "absolute", top: 16, right: 16, background: "rgba(0,0,0,0.08)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#374151" }}>✕</button>
+          <span style={{ background: project.color, color: "white", fontSize: "0.65rem", fontWeight: 700, padding: "0.2rem 0.7rem", borderRadius: 100, display: "inline-block", marginBottom: "0.75rem" }}>{project.tag}</span>
+          <h2 style={{ fontFamily: "'DM Serif Display','Noto Sans Thai',serif", fontSize: "1.6rem", color: "#0f172a", margin: "0 0 0.5rem", letterSpacing: "-0.02em" }}>{project.title}</h2>
+          <p style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", fontSize: "0.9rem", color: "#64748b", lineHeight: 1.6, margin: "0 0 1rem" }}>{project.desc}</p>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            {project.tech.map(t => (
+              <span key={t} style={{ fontFamily: "'DM Mono',monospace", fontSize: "0.7rem", background: "white", color: "#475569", padding: "0.25rem 0.7rem", borderRadius: 8, border: "1px solid #e2e8f0" }}>{t}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Features ── */}
+        {project.features && project.features.length > 0 ? (
+          <div style={{ padding: "2rem" }}>
+            <p style={{ fontFamily: "'DM Mono',monospace", fontSize: "0.72rem", color: "#3b82f6", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>// features</p>
+            <div className="feat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: "1.25rem" }}>
+              {project.features.map((feat, i) => (
+                <div key={i} style={{ borderRadius: 12, overflow: "hidden", border: "1.5px solid #f1f5f9", background: "#fafafa", transition: "box-shadow 0.2s, transform 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}>
+                  {feat.image ? (
+                    <div style={{ position: "relative", width: "100%", paddingBottom: "62%", background: "#f1f5f9", overflow: "hidden" }}>
+                      <img src={feat.image} alt={feat.desc}
+                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                        onError={e => { e.target.style.display = "none"; }} />
+                    </div>
+                  ) : (
+                    <div style={{ position: "relative", width: "100%", paddingBottom: "62%", background: project.color + "15" }}>
+                      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2rem", color: project.color, opacity: 0.45 }}>📷</div>
+                    </div>
+                  )}
+                  <div style={{ padding: "0.85rem 1rem" }}>
+                    <p style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", fontSize: "0.82rem", color: "#374151", lineHeight: 1.65, margin: 0 }}>{feat.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding: "3rem 2rem", textAlign: "center" }}>
+            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🚧</div>
+            <p style={{ fontFamily: "'DM Sans','Noto Sans Thai',sans-serif", color: "#94a3b8", fontSize: "0.9rem" }}>ยังไม่มี feature images — เพิ่ม features ใน PROJECTS data ได้เลย</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── NAVBAR ──────────────────────────────────────────────────────────────────
 function Navbar({ active, setActive }) {
   const [scrolled, setScrolled] = useState(false);
@@ -418,6 +515,7 @@ function SkillBar({ skill, inView, delay }) {
 function ProjectsSection() {
   const [ref, inView] = useInView();
   const [filter, setFilter] = useState("All");
+  const [selectedProject, setSelectedProject] = useState(null);
   const tags     = ["All", ...new Set(PROJECTS.map(p => p.tag))];
   const filtered = filter === "All" ? PROJECTS : PROJECTS.filter(p => p.tag === filter);
 
@@ -463,6 +561,7 @@ function ProjectsSection() {
           {filtered.map((p, i) => (
             <div key={p.title}
               style={{ background: "white", border: "1.5px solid #f1f5f9", borderRadius: 16, opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(20px)", transition: `all 0.6s ease ${0.1 + i * 0.1}s`, cursor: "pointer", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}
+              onClick={() => setSelectedProject(p)}
               onMouseEnter={e => { e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,0,0,0.1)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "#f1f5f9"; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)"; }}>
               <div style={{ position: "relative", width: "100%", paddingBottom: "56%", background: p.color + "18", overflow: "hidden" }}>
@@ -484,6 +583,10 @@ function ProjectsSection() {
           ))}
         </div>
       </div>
+
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
     </section>
   );
 }
@@ -705,6 +808,7 @@ export default function Portfolio() {
         @media(max-width:480px){
           .cert-grid   { grid-template-columns:1fr!important }
           .proj-grid   { grid-template-columns:1fr!important }
+          .feat-grid   { grid-template-columns:1fr!important }
           .section-pad { padding:4rem 1rem!important }
           .stats-row   { gap:0.75rem!important }
         }
